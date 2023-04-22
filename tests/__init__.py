@@ -1,0 +1,1 @@
+#workaround for root files not being accessible to pytest modules

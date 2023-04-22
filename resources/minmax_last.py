@@ -1,22 +1,22 @@
 import requests
 from flask_restful import Resource
 from flask import jsonify, make_response
-from resources.shared import api_url, validate_currency, validate_range
+from resources.shared import API_URL, ERROR_CURRENCY_CODE, ERROR_DATE_RANGE, VALID_CURRENCIES_A
 
 class MinMaxLast(Resource):
     def get(self, currency : str, num_days : int):
-        if not validate_currency(currency):
-            return make_response(jsonify({'error': 'Invalid currency code.'}), 400)
+        if not currency.upper() in VALID_CURRENCIES_A:
+            return make_response(jsonify({"error": ERROR_CURRENCY_CODE}), 400)
         
-        if not validate_range(num_days):
-            return make_response(jsonify({'error': 'Invalid number of quotations'}), 400)
+        if not (num_days > 0 and num_days < 256):
+            return make_response(jsonify({"error": ERROR_DATE_RANGE}), 400)
 
-        url = f"{api_url}/exchangerates/rates/a/{currency}/last/{num_days}/"
+        url = f"{API_URL}/exchangerates/rates/a/{currency}/last/{num_days}/"
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            result = {"mid_min": data['rates'][0]["mid"], "date_min":"", "mid_max": data['rates'][0]["mid"], "date_max":""}
-            for rate in data['rates']:
+            result = {"mid_min": data["rates"][0]["mid"], "date_min":"", "mid_max": data["rates"][0]["mid"], "date_max":""}
+            for rate in data["rates"]:
                 #if rates are equal, return the more recent one
                 #recent values are at the end of the list
 
@@ -30,4 +30,4 @@ class MinMaxLast(Resource):
 
             return make_response(jsonify(result), 200)
         else:
-            return make_response(jsonify({'error': response.text}), 400)
+            return make_response(jsonify({"error": response.text}), 400)

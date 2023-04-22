@@ -11,7 +11,7 @@
       "/average/{currency}/{date}": {
         "get": {
           "summary": "Get average exchange rate from a day",
-          "description": "Returns the average exchange rate for a currency on a day. Weekends and holidays return code 400",
+          "description": "Returns the average exchange rate for a currency on a day. Weekends and holidays return code 404. Dates in the future return error code 400.",
           "operationId": "getAverage",
           "parameters": [
             {
@@ -51,6 +51,16 @@
             },
             "400": {
               "description": "failed operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error_default"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "no data is available for this day and currency",
               "content": {
                 "application/json": {
                   "schema": {
