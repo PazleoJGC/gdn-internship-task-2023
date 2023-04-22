@@ -1,0 +1,244 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "NBP API + Swagger UI",
+      "description": "This is a web UI for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test tasks. \n\nList of currency codes: [nbp.pl](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-a/)",
+      "contact": {
+        "email": "pazdurleon@gmail.com"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://127.0.0.1:5000"
+      }
+    ],
+    "paths": {
+      "/average/{currency}/{date}": {
+        "get": {
+          "summary": "Get average exchange rate from a day",
+          "description": "Returns the average exchange rate for a currency on a day. Weekends and holidays return code 400",
+          "operationId": "getAverage",
+          "parameters": [
+            {
+              "name": "date",
+              "in": "path",
+              "description": "Date in YYYY-MM-DD format",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-04-21"
+              }
+            },
+            {
+              "name": "currency",
+              "in": "path",
+              "description": "Currency code",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3,
+                "example": "USD"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/average"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "failed operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error_default"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/minmax/{currency}/last/{num_days}": {
+        "get": {
+          "summary": "Get min and max average exchange rate from the last 'num_days' workdays",
+          "description": "Returns minimum and maximum average exchange rate values, and the days they occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
+          "operationId": "getMinMax",
+          "parameters": [
+            {
+              "name": "currency",
+              "in": "path",
+              "description": "Currency code",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3,
+                "example": "USD"
+              }
+            },
+            {
+              "name": "num_days",
+              "in": "path",
+              "description": "Number of days to take into account",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 255,
+                "example": 7
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/minmax-last"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "failed operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error_default"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/difference/{currency}/last/{num_days}": {
+        "get": {
+          "summary": "Get highest spread value from the last 'num_days' workdays",
+          "description": "Returns the highest difference between \"ask\" and \"pay\" values, and the day it occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
+          "operationId": "getDifference",
+          "parameters": [
+            {
+              "name": "currency",
+              "in": "path",
+              "description": "Currency code",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3,
+                "example": "USD"
+              }
+            },
+            {
+              "name": "num_days",
+              "in": "path",
+              "description": "Number of days to take into account",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 255,
+                "example": 7
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/difference-last"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "failed operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error_default"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "average": {
+          "type": "object",
+          "properties": {
+            "mid": {
+              "type": "number",
+              "format": "float",
+              "example": 2.8094
+            }
+          }
+        },
+        "minmax-last": {
+          "type": "object",
+          "properties": {
+            "mid_min": {
+              "type": "number",
+              "format": "float",
+              "example": 4.2006
+            },
+            "date_min": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-04-21"
+            },
+            "mid_max": {
+              "type": "number",
+              "format": "float",
+              "example": 4.2261
+            },
+            "date_max": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-04-17"
+            }
+          }
+        },
+        "difference-last": {
+          "type": "object",
+          "properties": {
+            "diff_max": {
+              "type": "number",
+              "format": "float",
+              "example": 0.085
+            },
+            "date": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-04-13"
+            }
+          }
+        },
+        "error_default": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string",
+              "example": "An error occured"
+            }
+          }
+        }
+      }
+    }
+  }

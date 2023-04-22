@@ -3,15 +3,15 @@ from flask_restful import Resource
 from flask import jsonify, make_response
 from resources.shared import api_url, validate_currency, validate_range
 
-class MinMaxRange(Resource):
-    def get(self, currency : str, range : int):
+class MinMaxLast(Resource):
+    def get(self, currency : str, num_days : int):
         if not validate_currency(currency):
             return make_response(jsonify({'error': 'Invalid currency code.'}), 400)
         
-        if not validate_range(range):
+        if not validate_range(num_days):
             return make_response(jsonify({'error': 'Invalid number of quotations'}), 400)
 
-        url = f"{api_url}/exchangerates/rates/a/{currency}/last/{range}/"
+        url = f"{api_url}/exchangerates/rates/a/{currency}/last/{num_days}/"
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
