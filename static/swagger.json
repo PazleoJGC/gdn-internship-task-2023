@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
       "title": "NBP API + Swagger UI",
-      "description": "This is a web UI for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test tasks. \n\nList of currency codes: [nbp.pl](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-a/)",
+      "description": "This is a web UI for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test tasks. \n\nList of currency codes:\n\n[Table A](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-a/)\n\n[Table C](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-c/)",
       "contact": {
         "email": "pazdurleon@gmail.com"
       }
@@ -11,7 +11,7 @@
       "/average/{currency}/{date}": {
         "get": {
           "summary": "Get average exchange rate from a day",
-          "description": "Returns the average exchange rate for a currency on a day. Weekends and holidays return code 404. Dates in the future return error code 400.",
+          "description": "Accepts currecy codes from table A.\n\nReturns average exchange rate for the specified currency and. Weekends and holidays return code 404.",
           "operationId": "getAverage",
           "parameters": [
             {
@@ -75,7 +75,7 @@
       "/minmax/{currency}/last/{num_days}": {
         "get": {
           "summary": "Get min and max average exchange rate from the last 'num_days' workdays",
-          "description": "Returns minimum and maximum average exchange rate values, and the days they occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
+          "description": "Accepts currecy codes from table A.\n\nReturns minimum and maximum average exchange rate values, and the days they occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
           "operationId": "getMinMax",
           "parameters": [
             {
@@ -130,7 +130,7 @@
       "/difference/{currency}/last/{num_days}": {
         "get": {
           "summary": "Get highest spread value from the last 'num_days' workdays",
-          "description": "Returns the highest difference between \"ask\" and \"pay\" values, and the day it occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
+          "description": "Accepts currecy codes from table C.\n\nReturns the highest difference between \"ask\" and \"pay\" values, and the day it occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
           "operationId": "getDifference",
           "parameters": [
             {

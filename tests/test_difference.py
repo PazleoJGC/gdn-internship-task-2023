@@ -1,6 +1,6 @@
 import pytest
 from app import app
-from resources.shared import VALID_CURRENCIES_B, ERROR_CURRENCY_CODE, ERROR_DATE_RANGE
+from resources.shared import VALID_CURRENCIES_C, ERROR_CURRENCY_CODE, ERROR_DATE_RANGE
 
 @pytest.fixture
 def client():
@@ -50,7 +50,7 @@ def test_difference_input_format(client):
 
 def test_difference_currencies(client):
     #supported currencies
-    for currency in VALID_CURRENCIES_B:
+    for currency in VALID_CURRENCIES_C:
         print(currency)
         response = client.get(f"/difference/{currency}/last/5")
         assert response.status_code == 200

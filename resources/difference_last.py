@@ -1,11 +1,11 @@
 import requests
 from flask_restful import Resource
 from flask import jsonify, make_response
-from resources.shared import API_URL, ERROR_CURRENCY_CODE, ERROR_DATE_RANGE, VALID_CURRENCIES_B
+from resources.shared import API_URL, ERROR_CURRENCY_CODE, ERROR_DATE_RANGE, VALID_CURRENCIES_C
 
 class DifferenceLast(Resource):
     def get(self, currency : str, num_days : int):
-        if not currency.upper() in VALID_CURRENCIES_B:
+        if not currency.upper() in VALID_CURRENCIES_C:
             return make_response(jsonify({"error": ERROR_CURRENCY_CODE}), 400)
         
         if not (num_days > 0 and num_days < 256):

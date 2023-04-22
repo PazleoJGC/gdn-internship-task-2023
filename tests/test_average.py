@@ -18,6 +18,11 @@ def test_average_weekend(client):
     assert response.status_code == 404
     assert response.json["error"] == ERROR_NO_DATA
 
+def test_average_holiday(client):
+    response = client.get("/average/USD/2022-01-06")
+    assert response.status_code == 404
+    assert response.json["error"] == ERROR_NO_DATA
+
 def test_average_date_range(client):
     """
     note: test valid until 21.04.2099
