@@ -1,4 +1,4 @@
-This is a repository for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test tasks.
+This is a repository for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test task.
 API was made in Flask and supports the required endpoints.
 All API endpoints have a set of unit tests written with pytest.
 There is a swagger UI present.
@@ -25,6 +25,19 @@ Tests are integrated with Visual Studio Code and can be ran ran from the [Testin
 `pytest tests` or `python -m pytest tests` from the project's main directory.
 
 ## Docker
+
+In CMD or PowerShell, use following commands:
+
+`docker pull pazleojgc/gdn-internship-task-2023:1.0.1` to download the image
+
+`docker run -d --name pazleo-api -p 5000:5000 pazleojgc/gdn-internship-task-2023:1.0.1` to load the image into a container. This is only required once. To start the container again, use `docker start pazleo-api`.
+
+The API is now running can be accessed from http://127.0.0.1:5000/swagger/
+
+To run tests in the container, connect to its terminal by typing `docker exec -it pazleo-api sh` in the command line. Once the terminal is connected, use `pytest tests` to run tests, and `exit` to leave the container.
+
+Once done, use `docker stop pazleo-api` to shut down the container.
+
 
 ---
 

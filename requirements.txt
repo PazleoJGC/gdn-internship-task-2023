@@ -1,4 +1,5 @@
 pytest
+gunicorn
 requests
 flask-restful
 flask_swagger_ui

@@ -2,16 +2,17 @@
     "openapi": "3.0.3",
     "info": {
       "title": "NBP API + Swagger UI",
-      "description": "This is a web UI for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test tasks. \n\nList of currency codes:\n\n[Table A](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-a/)\n\n[Table C](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-c/)",
+      "description": "This is a web UI for the [gdn-internship-2023](https://github.com/joaquinfilipic-dynatrace/gdn-internship-2023) backend test task. \n\nList of currency codes:\n\n[Table A](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-a/)\n\n[Table C](https://nbp.pl/en/statistic-and-financial-reporting/rates/table-c/)\n\nDetailed information:",
       "contact": {
-        "email": "pazdurleon@gmail.com"
+        "name": "Github repository",
+        "url": "https://github.com/PazleoJGC/gdn-internship-task-2023"
       }
     },
     "paths": {
       "/average/{currency}/{date}": {
         "get": {
           "summary": "Get average exchange rate from a day",
-          "description": "Accepts currecy codes from table A.\n\nReturns average exchange rate for the specified currency and. Weekends and holidays return code 404.",
+          "description": "Accepts currecy codes from table A.\n\nReturns average exchange rate for the specified currency and date. Weekends and holidays return code 404.",
           "operationId": "getAverage",
           "parameters": [
             {
@@ -93,7 +94,7 @@
             {
               "name": "num_days",
               "in": "path",
-              "description": "Number of days to take into account",
+              "description": "Number of days to take into account, up to 255",
               "required": true,
               "schema": {
                 "type": "integer",
@@ -148,7 +149,7 @@
             {
               "name": "num_days",
               "in": "path",
-              "description": "Number of days to take into account",
+              "description": "Number of days to take into account, up to 255",
               "required": true,
               "schema": {
                 "type": "integer",

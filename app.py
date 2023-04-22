@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask_restful import Api
 from flask_swagger_ui import get_swaggerui_blueprint
 
@@ -8,6 +8,10 @@ from resources.difference_last import DifferenceLast
 
 app = Flask(__name__)
 api = Api(app)
+
+@app.route('/')
+def root():
+    return redirect('/swagger')
 
 api.add_resource(AverageRate, "/average/<string:currency>/<string:date>")
 api.add_resource(MinMaxLast, "/minmax/<string:currency>/last/<int:num_days>")
