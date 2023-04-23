@@ -131,7 +131,7 @@
       "/difference/{currency}/last/{num_days}": {
         "get": {
           "summary": "Get highest spread value from the last 'num_days' workdays",
-          "description": "Accepts currecy codes from table C.\n\nReturns the highest difference between \"ask\" and \"pay\" values, and the day it occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
+          "description": "Accepts currecy codes from table C.\n\nReturns the highest difference between \"ask\" and \"bid\" values, and the day it occured.\n\nWeekends and holidays are skipped and do not count towards the 'num_days' limit.",
           "operationId": "getDifference",
           "parameters": [
             {

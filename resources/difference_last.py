@@ -5,6 +5,11 @@ from resources.shared import API_URL, ERROR_CURRENCY_CODE, ERROR_DATE_RANGE, VAL
 
 class DifferenceLast(Resource):
     def get(self, currency : str, num_days : int):
+        """
+        Returns the highest difference between "ask" and "bid" values, and the day it occured.
+        
+        Weekends and holidays are skipped and do not count towards the 'num_days' limit."
+        """
         if not currency.upper() in VALID_CURRENCIES_C:
             return make_response(jsonify({"error": ERROR_CURRENCY_CODE}), 400)
         

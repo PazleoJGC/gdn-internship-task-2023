@@ -6,6 +6,11 @@ from resources.shared import API_URL, VALID_CURRENCIES_A, ERROR_CURRENCY_CODE, E
 
 class AverageRate(Resource):
     def get(self, date : str, currency : str):
+        """
+        Returns average exchange rate for the specified currency and date.
+        
+        Weekends and holidays return code 404.
+        """
         if not currency.upper() in VALID_CURRENCIES_A:
             return make_response(jsonify({"error": ERROR_CURRENCY_CODE}), 400)
 
